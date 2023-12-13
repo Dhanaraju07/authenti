@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useContext } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Login from "./Components/Login/Login";
+import Register from "./Components/Register/Register";
+import Dashboard from "./Components/Dashboard/Dashboard";
+import Home from "./Components/Home/Home";
+import { AuthContext } from "./AuthContext/AuthContext";
 
-function App() {
+const AuthenticatedRoute = ({ element }) => {
+  const { user } = useContext(AuthContext);
+
+  if (!user) {
+    return <Navigate to="/login" />;
+  }
+
+  if (user.role === "admin") {
+    return <Navigate to="/dashboard" />;
+  }
+
+  if (user.role === "user") {
+    return <Navigate to="/" />;
+  }
+
+  return element;
+};
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/create" element={<Register />} />
+        <Route path="/" element={<AuthenticatedRoute element={<Home />} />} />
+        <Route
+          path="/dashboard"
+          element={<AuthenticatedRoute element={<Dashboard />} />}
+        />
+      </Routes>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;
