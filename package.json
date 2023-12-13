@@ -1,5 +1,5 @@
 {
-  "name": "auth-with-mern",
+  "name": "role-based-authentication",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
