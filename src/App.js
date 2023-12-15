@@ -1,27 +1,21 @@
-import React, { useContext } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Login from "./Components/Login/Login";
-import Register from "./Components/Register/Register";
+import React from "react";
+import { Routes, Route, Navigate, BrowserRouter } from "react-router-dom";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import Home from "./Components/Home/Home";
-import { AuthContext } from "./AuthContext/AuthContext";
+import Login from "./Components/Login/Login";
+import Register from "./Components/Register/Register";
 
-const AuthenticatedRoute = ({ element }) => {
-  const { user } = useContext(AuthContext);
+const ProtectedRoute = ({ children }) => {
+  const isAuthenticated = localStorage.getItem("jwt_token");
+  const userRole = localStorage.getItem("role");
 
-  if (!user) {
+  if (!isAuthenticated) {
     return <Navigate to="/login" />;
+  } else if (userRole !== "admin") {
+    return <Home />;
+  } else if (userRole !== "user") {
+    return <Dashboard />;
   }
-
-  if (user.role === "admin") {
-    return <Navigate to="/dashboard" />;
-  }
-
-  if (user.role === "user") {
-    return <Navigate to="/" />;
-  }
-
-  return element;
 };
 
 const App = () => {
@@ -30,10 +24,23 @@ const App = () => {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/create" element={<Register />} />
-        <Route path="/" element={<AuthenticatedRoute element={<Home />} />} />
+
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          }
+        />
+
         <Route
           path="/dashboard"
-          element={<AuthenticatedRoute element={<Dashboard />} />}
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
         />
       </Routes>
     </BrowserRouter>

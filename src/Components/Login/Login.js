@@ -19,13 +19,18 @@ const Login = () => {
       axios
         .post("http://localhost:4300/auth/login", newData)
         .then((res) => {
-          console.log(res.data, res.data.message);
-          localStorage.setItem("jwt_token", res.data.userToken);
-          alert(res.data.message);
+          localStorage.setItem("jwt_token", res.data.userDetails?.token);
+          localStorage.setItem("role", res.data.userDetails?.role);
+          if (res.data.userDetails?.role === "user") {
+            navigate("/");
+          }
+          if (res.data.userDetails?.role === "admin") {
+            navigate("/dashboard");
+          }
         })
         .catch((err) => {
           alert(err.message);
-        })
+        });
     }
   };
 

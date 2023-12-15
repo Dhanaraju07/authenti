@@ -1,12 +1,14 @@
-import React, { useContext } from 'react';
-import { Button } from '@mui/material';
-import { AuthContext } from '../../AuthContext/AuthContext';
+import React from "react";
+import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-  const { logout } = useContext(AuthContext);
-
+  const navigate = useNavigate()
+  
   const handleLogout = () => {
-    logout();
+    localStorage.removeItem("jwt_token");
+    localStorage.removeItem("role");
+    navigate("/login");
   };
 
   return (
