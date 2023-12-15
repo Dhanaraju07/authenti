@@ -13,7 +13,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <h2>Dashboard</h2>
+      <h2>Welcome to Dashboard page</h2>
       <Button variant="contained" onClick={handleLogout}>
         Logout
       </Button>

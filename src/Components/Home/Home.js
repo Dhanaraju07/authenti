@@ -3,8 +3,8 @@ import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-  const navigate = useNavigate()
-  
+  const navigate = useNavigate();
+
   const handleLogout = () => {
     localStorage.removeItem("jwt_token");
     localStorage.removeItem("role");
@@ -13,7 +13,7 @@ const Home = () => {
 
   return (
     <div>
-      <h2>Home</h2>
+      <h2>Welcome to Home page</h2>
       <Button variant="contained" onClick={handleLogout}>
         Logout
       </Button>
