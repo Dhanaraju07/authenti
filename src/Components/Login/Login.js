@@ -84,6 +84,14 @@ const Login = () => {
             </Button>
           </form>
         </div>
+        <div style={{ textAlign: "center" }}>
+          <h5 className="email"> User Email: ram@gmail.com</h5>
+          <h5 className="password">User Password: ram</h5>
+        </div>
+        <div style={{ textAlign: "center" }}>
+          <h5 className="email"> Admin Email: naramsettydhanaraj@gmail.com</h5>
+          <h5 className="password">Admin Password: dhanaraj</h5>
+        </div>
       </div>
     </>
   );
